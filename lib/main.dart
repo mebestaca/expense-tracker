@@ -1,4 +1,10 @@
+import 'package:expense_tracker/pages/authentication/auth_controller.dart';
+import 'package:expense_tracker/services/authentication.dart';
+import 'package:expense_tracker/shared/main_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'constants/routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,12 +35,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Expense Tracker"),
-      ),
-      body: const Center(
-        child: Text("test")
+    return StreamProvider.value(
+      initialData: null,
+      value: AuthenticationService().userInfo,
+      child: MaterialApp(
+        theme: mainTheme,
+        home: const AuthController(),
+        routes: const {
+          /*
+          Routes.lowItems : (context) => const LowItems(),
+          Routes.dashboard : (context) => const Dashboard(),
+          Routes.maintenance : (context) => const Maintenance(),
+          Routes.allItems : (context) => const Items(),
+          Routes.sharedScaffold : (context) => const SharedScaffold()
+           */
+        },
       ),
     );
   }
