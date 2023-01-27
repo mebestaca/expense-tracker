@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../services/authentication.dart';
 import '../../shared/error_card.dart';
 import '../../shared/text_decoration.dart';
 
@@ -93,7 +94,7 @@ class _LoginState extends State<Login> {
                                           _isLoading = true;
                                         });
 
-                                        /*
+
                                         dynamic result = await AuthenticationService().signInEmail(
                                             email: _email,
                                             password: _password
@@ -106,7 +107,7 @@ class _LoginState extends State<Login> {
                                             _isLoading = false;
                                           });
                                         }
-                                        */
+
                                       }
                                     },
                                     child: const Text("Login")),

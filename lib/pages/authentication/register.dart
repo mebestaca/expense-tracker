@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../services/authentication.dart';
 import '../../shared/error_card.dart';
 import '../../shared/text_decoration.dart';
 
@@ -97,7 +98,7 @@ class _RegisterState extends State<Register> {
                               _isLoading = true;
                             });
 
-                            /*
+
                             dynamic result = await AuthenticationService().signUpEmail(
                                 lastName: _lastname,
                                 firstName: _firstname,
@@ -112,7 +113,7 @@ class _RegisterState extends State<Register> {
                               });
                               return;
                             }
-                            */
+
                           }
 
                           if (stepIndex <= 0) {
