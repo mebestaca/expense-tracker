@@ -1,12 +1,15 @@
 import 'package:expense_tracker/pages/authentication/auth_controller.dart';
 import 'package:expense_tracker/services/authentication.dart';
 import 'package:expense_tracker/shared/main_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'constants/routes.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
