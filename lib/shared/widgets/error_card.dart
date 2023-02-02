@@ -12,13 +12,13 @@ class ErrorCard extends StatelessWidget {
       child: Card(
         shape: RoundedRectangleBorder(
           side: BorderSide(
-            color: Theme.of(context).errorColor,
+            color: Theme.of(context).colorScheme.error,
           ),
         ),
         child: ListTile(
           title: Text(errorText,
             style: TextStyle(
-              color: Theme.of(context).errorColor,
+              color: Theme.of(context).colorScheme.error,
             ),
           ),
         ),
