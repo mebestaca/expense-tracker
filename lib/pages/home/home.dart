@@ -1,3 +1,4 @@
+import 'package:expense_tracker/pages/category/category_list.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/authentication.dart';
@@ -19,6 +20,7 @@ class _HomeState extends State<Home> {
     const Charts(),
     const Charts(),
     const Charts(),
+    const CategoryList(),
   ];
 
   final List<String> _widgetTitles = [
@@ -87,7 +89,7 @@ class _HomeState extends State<Home> {
                 title: Text(_widgetTitles[4]),
                 leading: const Icon(Icons.category_outlined),
                 onTap: () {
-                  updatePage(2);
+                  updatePage(4);
                   Navigator.pop(context);
                 },
               ),
