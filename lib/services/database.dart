@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:expense_tracker/models/model_category.dart';
+import 'package:expense_tracker/models/model_user.dart';
 
 class DatabaseService {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
@@ -21,11 +23,16 @@ class DatabaseService {
     return await _ref.doc(id).delete();
   }
 
-  /*
-  CollectionReference<ItemModel> getItemModelReference() {
-    return _ref.withConverter<ItemModel>(
-        fromFirestore: (snapshot, _) => ItemModel.fromJson(snapshot.data()!!),
-        toFirestore: (item, _) => item.toJson());
+  CollectionReference<UserModel> getUserModelReference() {
+    return _ref.withConverter<UserModel>(
+        fromFirestore: (snapshot, _) => UserModel.fromJson(snapshot.data()!),
+        toFirestore: (user, _) => user.toJson());
   }
-  */
+
+  CollectionReference<CategoryModel> getCategoryModelReference() {
+    return _ref.withConverter<CategoryModel>(
+        fromFirestore: (snapshot, _) => CategoryModel.fromJson(snapshot.data()!),
+        toFirestore: (category, _) => category.toJson());
+  }
+
 }
