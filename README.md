@@ -1,6 +1,6 @@
 # expense_tracker
 
-A flutter project designed to manage everyday expenses by collating all the expenses minus the monthly budget.
+A flutter project designed to track user expenses and provide meaningful reports.
 
 ## Features
  - [Charts] - Charts to show which categories the user spends
@@ -16,6 +16,10 @@ A flutter project designed to manage everyday expenses by collating all the expe
  - [Reports] - [0/100]
  - [Categories] - [30/100]
  - [Authentication] - [95/100]
+
+## Technology Used
+- Flutter
+- Firebase Firestore
 
 
 
