@@ -1,16 +1,21 @@
 # expense_tracker
 
-A new Flutter project.
+A flutter project designed to manage everyday expenses by collating all the expenses minus the monthly budget.
 
-## Getting Started
+## Features
+ - [Charts] - Charts to show which categories the user spends
+ - [Reports] - Shows the total amount spent per day/week/month
+ - [Categories] - Custom categories per user
+ - [Authentication] - User Authentication to prevent data loss when using multiple devices
 
-This project is a starting point for a Flutter application.
+## Maybe
+ - Web version
 
-A few resources to get you started if this is your first Flutter project:
+## Current Progress
+ - [Charts] - [0/100]
+ - [Reports] - [0/100]
+ - [Categories] - [30/100]
+ - [Authentication] - [95/100]
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
