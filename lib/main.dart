@@ -1,6 +1,7 @@
 import 'package:expense_tracker/pages/authentication/auth_controller.dart';
 import 'package:expense_tracker/services/authentication.dart';
 import 'package:expense_tracker/shared/main_theme.dart';
+import 'package:expense_tracker/shared/widgets/category_data_entry.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -44,14 +45,8 @@ class _MyHomePageState extends State<MyHomePage> {
       child: MaterialApp(
         theme: mainTheme,
         home: const AuthController(),
-        routes: const {
-          /*
-          Routes.lowItems : (context) => const LowItems(),
-          Routes.dashboard : (context) => const Dashboard(),
-          Routes.maintenance : (context) => const Maintenance(),
-          Routes.allItems : (context) => const Items(),
-          Routes.sharedScaffold : (context) => const SharedScaffold()
-           */
+        routes: {
+          Routes.categoryMaintenance : (context) =>  const CategoryDataEntry(),
         },
       ),
     );
