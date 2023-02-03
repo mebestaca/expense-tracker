@@ -14,7 +14,7 @@ A flutter project designed to track user expenses and provide meaningful reports
 ## Current Progress
  - [Charts] - [0/100]
  - [Reports] - [0/100]
- - [Categories] - [30/100]
+ - [Categories] - [60/100]
  - [Authentication] - [95/100]
 
 ## Technology Used
