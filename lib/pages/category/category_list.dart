@@ -79,10 +79,42 @@ class _CategoryListState extends State<CategoryList> {
                         itemBuilder: (context, index) {
                           return GenericListTile(
                               id: categoriesData.docs[index].id,
-                              model: CategoryModel(
-                                category: categoriesData.docs[index][CategoryModel.fieldCATEGORY]
-                              ),
                               path: widget.path,
+                              title: categoriesData.docs[index][CategoryModel.fieldCATEGORY],
+                              switchFunction: (item) async {
+                                switch(item) {
+                                  case CategoryEntryMode.add:
+                                    break;
+                                  case CategoryEntryMode.edit:
+                                    Navigator.pushNamed(context, Routes.categoryMaintenance,
+                                        arguments: {
+                                          "widget" : CategoryDataEntry(
+                                            entryMode: CategoryEntryMode.edit,
+                                            id: categoriesData.docs[index].id,
+                                            model: CategoryModel(
+                                              category: categoriesData.docs[index][CategoryModel.fieldCATEGORY]
+                                            ),
+                                            path: widget.path,
+                                          ),
+                                          "title" : "Edit Category",
+                                        });
+                                    break;
+                                  case CategoryEntryMode.delete:
+                                    await DatabaseService(path: widget.path).deleteEntry(categoriesData.docs[index].id);
+                                    break;
+                                }
+                              },
+                              popUpMenuItemList: const [
+                                PopupMenuItem<CategoryEntryMode>(
+                                    value: CategoryEntryMode.edit,
+                                    child: Text("Edit")
+                                ),
+                                PopupMenuItem<CategoryEntryMode>(
+                                    value: CategoryEntryMode.delete,
+                                    child: Text("Delete")
+                                ),
+                              ],
+
                           );
                         }
                     );
