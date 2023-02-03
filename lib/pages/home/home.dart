@@ -1,4 +1,4 @@
-import 'package:expense_tracker/pages/category/category_list.dart';
+import 'package:expense_tracker/pages/category/category_main.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/authentication.dart';
@@ -20,7 +20,7 @@ class _HomeState extends State<Home> {
     const Charts(),
     const Charts(),
     const Charts(),
-    const CategoryList(),
+    const CategoryMain(),
   ];
 
   final List<String> _widgetTitles = [
