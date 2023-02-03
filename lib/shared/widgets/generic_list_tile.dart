@@ -1,6 +1,7 @@
 import 'package:expense_tracker/constants/routes.dart';
 import 'package:expense_tracker/models/model_category.dart';
 import 'package:expense_tracker/shared/widgets/category_data_entry.dart';
+import 'package:expense_tracker/shared/widgets/generic_popup_menu_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/database.dart';
@@ -34,9 +35,8 @@ class _GenericListTileState extends State<GenericListTile> {
             borderRadius: BorderRadius.circular(5),
           ),
         title: Text(widget.model.category),
-        trailing: PopupMenuButton<CategoryEntryMode>(
-          initialValue: selectedMenu,
-          onSelected: (CategoryEntryMode item) async {
+        trailing: GenericPopUpMenuButton(
+          switchFunction: (item) async {
             switch(item) {
               case CategoryEntryMode.add:
                 break;
@@ -56,12 +56,12 @@ class _GenericListTileState extends State<GenericListTile> {
                 await DatabaseService(path: widget.path).deleteEntry(widget.id);
             }
           },
-          itemBuilder: (BuildContext context) => <PopupMenuEntry<CategoryEntryMode>>[
-            const PopupMenuItem<CategoryEntryMode>(
-              value: CategoryEntryMode.edit,
-              child: Text("Edit")
+          popUpMenuItemList: const [
+            PopupMenuItem<CategoryEntryMode>(
+                value: CategoryEntryMode.edit,
+                child: Text("Edit")
             ),
-            const PopupMenuItem<CategoryEntryMode>(
+            PopupMenuItem<CategoryEntryMode>(
                 value: CategoryEntryMode.delete,
                 child: Text("Delete")
             ),
