@@ -27,8 +27,22 @@ class _CategoryDataEntryState extends State<CategoryDataEntry> {
   final categoryController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
+  bool isInhibited = false;
+
+
   @override
   Widget build(BuildContext context) {
+
+    if (widget.entryMode == CategoryEntryMode.edit) {
+      setState(() {
+        if (!isInhibited) {
+          categoryName = widget.model.category;
+          categoryController.text = categoryName;
+          isInhibited = true;
+        }
+      });
+    }
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -87,7 +101,10 @@ class _CategoryDataEntryState extends State<CategoryDataEntry> {
                         }
 
                         if (widget.entryMode == CategoryEntryMode.edit) {
-                          await DatabaseService(path: widget.path).updateEntry(data, widget.id).then((value) => Navigator.pop(context));
+                          await DatabaseService(path: widget.path).updateEntry(data, widget.id).then((value) {
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            Navigator.pop(context);
+                          });
                         }
                     }
                 },
