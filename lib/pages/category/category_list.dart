@@ -1,3 +1,4 @@
+import 'package:expense_tracker/shared/widgets/generic_list_tile.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/routes.dart';
@@ -32,28 +33,30 @@ class _CategoryListState extends State<CategoryList> {
           color: Theme.of(context).canvasColor,
           child: Form(
             key: globalKey,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                controller: categoryController,
-                decoration: fieldStyle.copyWith(
-                    hintText: "category",
-                    labelText: "search",
-                    suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            categoryName = "";
-                            categoryController.clear();
-                          });
-                        },
-                        icon: categoryName.isNotEmpty ? const Icon(Icons.cancel_outlined) : Container()
-                    )
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: categoryController,
+                  decoration: fieldStyle.copyWith(
+                      hintText: "category",
+                      labelText: "search",
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              categoryName = "";
+                              categoryController.clear();
+                            });
+                          },
+                          icon: categoryName.isNotEmpty ? const Icon(Icons.cancel_outlined) : Container()
+                      )
+                  ),
+                  onChanged: (val) {
+                    setState(() {
+                      categoryName = val;
+                    });
+                  },
                 ),
-                onChanged: (val) {
-                  setState(() {
-                    categoryName = val;
-                  });
-                },
               ),
             ),
           ),
@@ -74,7 +77,13 @@ class _CategoryListState extends State<CategoryList> {
                         shrinkWrap: true,
                         itemCount: categoriesData.size,
                         itemBuilder: (context, index) {
-                          return Text(categoriesData.docs[index][CategoryModel.fieldCATEGORY]);
+                          return GenericListTile(
+                              id: categoriesData.docs[index].id,
+                              model: CategoryModel(
+                                category: categoriesData.docs[index][CategoryModel.fieldCATEGORY]
+                              ),
+                              path: widget.path,
+                          );
                         }
                     );
                   }
@@ -88,29 +97,32 @@ class _CategoryListState extends State<CategoryList> {
               }
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, Routes.categoryMaintenance,
-                      arguments: {
-                        "widget" : CategoryDataEntry(
-                          entryMode: CategoryEntryMode.add,
-                          id: "",
-                          model: CategoryModel(),
-                          path: widget.path,
-                        ),
-                        "title" : "New Category",
-                      }
-                  );
-                },
-                child: Text("Add New Category",
-                  style: TextStyle(
-                      fontSize: MediaQuery.of(context).textScaleFactor * 18
-                  ),
-                )
+        Container(
+          color: Theme.of(context).canvasColor,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, Routes.categoryMaintenance,
+                        arguments: {
+                          "widget" : CategoryDataEntry(
+                            entryMode: CategoryEntryMode.add,
+                            id: "",
+                            model: CategoryModel(),
+                            path: widget.path,
+                          ),
+                          "title" : "New Category",
+                        }
+                    );
+                  },
+                  child: Text("Add New Category",
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).textScaleFactor * 18
+                    ),
+                  )
+              ),
             ),
           ),
         )
