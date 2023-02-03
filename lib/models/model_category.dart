@@ -1,8 +1,8 @@
 class CategoryModel{
-  final String uid;
+
   final String category;
 
-  CategoryModel({this.uid = "", this.category = ""});
+  CategoryModel({this.category = ""});
 
   static const String fieldCATEGORY = "CATEGORY";
 
