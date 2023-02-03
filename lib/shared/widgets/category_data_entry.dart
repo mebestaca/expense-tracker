@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 
 enum CategoryEntryMode{
   add,
-  edit
+  edit,
+  delete
 }
 
 class CategoryDataEntry extends StatefulWidget {
@@ -73,7 +74,6 @@ class _CategoryDataEntryState extends State<CategoryDataEntry> {
                             },
                           ),
                         );
-
 
                         if (widget.entryMode == CategoryEntryMode.add) {
                            await DatabaseService(path: widget.path).addEntry(data);
