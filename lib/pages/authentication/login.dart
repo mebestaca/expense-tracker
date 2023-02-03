@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../services/authentication.dart';
-import '../../shared/error_card.dart';
+import '../../shared/widgets/error_card.dart';
 import '../../shared/text_decoration.dart';
+import '../../shared/widgets/loading_screen.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key, required this.toggleView}) : super(key: key);
@@ -138,11 +139,9 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-          /*
           Visibility(
               visible: _isLoading, child: const Loading()
           ),
-          */
         ],
       ),
     );
