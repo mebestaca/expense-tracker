@@ -1,8 +1,10 @@
 import 'package:expense_tracker/pages/category/category_main.dart';
+import 'package:expense_tracker/pages/expenses/today.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/authentication.dart';
 import '../charts/charts.dart';
+import '../expenses/history.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -17,9 +19,9 @@ class _HomeState extends State<Home> {
 
   final List<Widget> _widgetList = <Widget>[
     const Charts(),
-    const Charts(),
-    const Charts(),
-    const Charts(),
+    const Placeholder(),
+    const TodayExpenses(),
+    const HistoryExpenses(),
     const CategoryMain(),
   ];
 
