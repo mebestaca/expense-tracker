@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
         theme: mainTheme,
         home: const AuthController(),
         routes: {
-          Routes.categoryMaintenance : (context) =>  const GenericScaffold(),
+          Routes.genericRoute : (context) =>  const GenericScaffold(),
         },
       ),
     );
