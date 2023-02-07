@@ -86,7 +86,7 @@ class _CategoryListState extends State<CategoryList> {
                                   case CategoryEntryMode.add:
                                     break;
                                   case CategoryEntryMode.edit:
-                                    Navigator.pushNamed(context, Routes.categoryMaintenance,
+                                    Navigator.pushNamed(context, Routes.genericRoute,
                                         arguments: {
                                           "widget" : CategoryDataEntry(
                                             entryMode: CategoryEntryMode.edit,
@@ -137,7 +137,7 @@ class _CategoryListState extends State<CategoryList> {
               width: double.infinity,
               child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, Routes.categoryMaintenance,
+                    Navigator.pushNamed(context, Routes.genericRoute,
                         arguments: {
                           "widget" : CategoryDataEntry(
                             entryMode: CategoryEntryMode.add,
