@@ -1,4 +1,3 @@
-import 'package:expense_tracker/pages/expenses/today.dart';
 import 'package:expense_tracker/shared/widgets/generic_pathfinder.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +19,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _widgetList = <Widget>[
     const Charts(),
     const Placeholder(),
-    const TodayExpenses(),
+    const GenericPathfinder(pages: Pages.today),
     const HistoryExpenses(),
     const GenericPathfinder(pages: Pages.category),
   ];
