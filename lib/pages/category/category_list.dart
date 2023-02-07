@@ -149,9 +149,9 @@ class _CategoryListState extends State<CategoryList> {
                         }
                     );
                   },
-                  child: Text("Add New Category",
+                  child: const Text("Add New Category",
                     style: TextStyle(
-                        fontSize: MediaQuery.of(context).textScaleFactor * 18
+                        fontSize: 18
                     ),
                   )
               ),
