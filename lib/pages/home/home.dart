@@ -1,5 +1,5 @@
-import 'package:expense_tracker/pages/category/category_main.dart';
 import 'package:expense_tracker/pages/expenses/today.dart';
+import 'package:expense_tracker/shared/widgets/generic_pathfinder.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/authentication.dart';
@@ -22,7 +22,7 @@ class _HomeState extends State<Home> {
     const Placeholder(),
     const TodayExpenses(),
     const HistoryExpenses(),
-    const CategoryMain(),
+    const GenericPathfinder(pages: Pages.category),
   ];
 
   final List<String> _widgetTitles = [
@@ -73,7 +73,7 @@ class _HomeState extends State<Home> {
                     title: Text(_widgetTitles[2]),
                     leading: const Icon(Icons.event_available_outlined),
                     onTap: () {
-                      updatePage(0);
+                      updatePage(2);
                       Navigator.pop(context);
                     },
                   ),
@@ -81,7 +81,7 @@ class _HomeState extends State<Home> {
                     title: Text(_widgetTitles[3]),
                     leading: const Icon(Icons.account_balance_wallet_outlined),
                     onTap: () {
-                      updatePage(0);
+                      updatePage(3);
                       Navigator.pop(context);
                     },
                   ),
