@@ -1,3 +1,3 @@
 class Routes{
-  static const String categoryMaintenance = "/category_maintenance";
+  static const String genericRoute = "/generic_route";
 }
