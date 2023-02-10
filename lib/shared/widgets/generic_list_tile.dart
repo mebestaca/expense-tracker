@@ -3,11 +3,12 @@ import 'package:expense_tracker/shared/widgets/generic_popup_menu_button.dart';
 import 'package:flutter/material.dart';
 
 class GenericListTile extends StatefulWidget {
-  const GenericListTile({Key? key, required this.id, required this.path, required this.title, required this.switchFunction, required this.popUpMenuItemList}) : super(key: key);
+  const GenericListTile({Key? key, required this.id, required this.path, required this.title, required this.switchFunction, required this.popUpMenuItemList, required this.subTitle}) : super(key: key);
 
   final String id;
   final String path;
   final String title;
+  final String subTitle;
   final Function switchFunction;
   final List<PopupMenuItem> popUpMenuItemList;
 
@@ -28,11 +29,17 @@ class _GenericListTileState extends State<GenericListTile> {
         vertical: 3.0
       ),
       child: ListTile(
-          shape: RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
             side: const BorderSide(color: Colors.black, width: 1),
             borderRadius: BorderRadius.circular(5),
-          ),
+        ),
         title: Text(widget.title),
+        subtitle: SizedBox(
+          width: double.infinity,
+          child: Text(widget.subTitle,
+            textAlign: TextAlign.end,
+          ),
+        ),
         trailing: GenericPopUpMenuButton(
           switchFunction: (item) async {
             widget.switchFunction(item);
