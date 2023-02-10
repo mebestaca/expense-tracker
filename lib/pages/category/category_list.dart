@@ -81,6 +81,7 @@ class _CategoryListState extends State<CategoryList> {
                               id: categoriesData.docs[index].id,
                               path: widget.path,
                               title: categoriesData.docs[index][CategoryModel.fieldCATEGORY],
+                              subTitle: "",
                               switchFunction: (item) async {
                                 switch(item) {
                                   case CategoryEntryMode.add:
