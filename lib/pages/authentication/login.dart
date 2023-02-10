@@ -95,6 +95,7 @@ class _LoginState extends State<Login> {
                                           _isLoading = true;
                                         });
 
+                                        FocusManager.instance.primaryFocus?.unfocus();
 
                                         dynamic result = await AuthenticationService().signInEmail(
                                             email: _email,
