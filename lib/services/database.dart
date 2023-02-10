@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracker/models/model_category.dart';
 import 'package:expense_tracker/models/model_user.dart';
 
+import '../models/model_items.dart';
+
 class DatabaseService {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   late CollectionReference _ref;
@@ -33,6 +35,12 @@ class DatabaseService {
     return _ref.withConverter<CategoryModel>(
         fromFirestore: (snapshot, _) => CategoryModel.fromJson(snapshot.data()!),
         toFirestore: (category, _) => category.toJson());
+  }
+
+  CollectionReference<ItemModel> getItemModelReference() {
+    return _ref.withConverter<ItemModel>(
+        fromFirestore: (snapshot, _) => ItemModel.fromJson(snapshot.data()!),
+        toFirestore: (item, _) => item.toJson());
   }
 
 }
