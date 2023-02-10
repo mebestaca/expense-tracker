@@ -48,7 +48,7 @@ class _GenericPathfinderState extends State<GenericPathfinder> {
                 case Pages.dashboard:
                   return const Charts();
                 case Pages.today:
-                  String path = "${Paths.users}/${userData.docs[0].id}/${Paths.category}";
+                  String path = "${Paths.users}/${userData.docs[0].id}/";
                   return TodayList(path: path);
                 case Pages.history:
                   return const HistoryExpenses();
