@@ -41,17 +41,19 @@ class _GenericPathfinderState extends State<GenericPathfinder> {
           if (user.hasData) {
             final userData = user.requireData;
 
-            String path = "${Paths.users}/${userData.docs[0].id}/${Paths.category}";
+
 
             if (userData.size > 0) {
               switch(widget.pages){
                 case Pages.dashboard:
                   return const Charts();
                 case Pages.today:
+                  String path = "${Paths.users}/${userData.docs[0].id}/${Paths.category}";
                   return TodayList(path: path);
                 case Pages.history:
                   return const HistoryExpenses();
                 case Pages.category:
+                  String path = "${Paths.users}/${userData.docs[0].id}/${Paths.category}";
                   return CategoryList(path: path);
               }
             }
