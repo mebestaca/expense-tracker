@@ -10,7 +10,8 @@ extension ItemQuery on Query<ItemModel> {
   Query<ItemModel> queryBy(ItemQueryModes query, {String filter=""}) {
     switch(query) {
       case ItemQueryModes.today:
-        return where(ItemModel.fieldDate, isEqualTo: filter);
+        return where(ItemModel.fieldDate, isEqualTo: filter).
+          orderBy(ItemModel.fieldName, descending: false);
     }
   }
 }
