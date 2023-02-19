@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracker/extensions/item_model_extension.dart';
 import 'package:expense_tracker/models/model_items.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +7,6 @@ import 'package:intl/intl.dart';
 import '../../constants/paths.dart';
 import '../../constants/routes.dart';
 import '../../services/database.dart';
-import '../../shared/text_decoration.dart';
-import '../../shared/widgets/category_data_entry.dart';
 import '../../shared/widgets/generic_list_tile.dart';
 import '../../shared/widgets/loading_screen.dart';
 import '../../shared/widgets/today_data_entry.dart';
@@ -26,7 +25,6 @@ class _TodayListState extends State<TodayList> {
 
   String itemName = "";
   final globalKey = GlobalKey<FormState>();
-  final itemNameController = TextEditingController();
   late String transDate;
   late DateTime currentDate;
   final dateFormatter = DateFormat("yyyy-MM-dd");
@@ -61,24 +59,57 @@ class _TodayListState extends State<TodayList> {
             children: [
               Container(
                 color: Theme.of(context).canvasColor,
-                child: Form(
-                  key: globalKey,
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: TextFormField(
-                        readOnly: true,
-                        controller: itemNameController,
-                        decoration: fieldStyle.copyWith(
-                          hintText: "total",
-                          labelText: "today",
-                        ),
-                        onChanged: (val) {
-                          setState(() {
-                            itemName = val;
-                          });
-                        },
-                      ),
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: StreamBuilder(
+                      stream: DatabaseService(path: pathItem).getItemModelReference().
+                      queryBy(ItemQueryModes.today, filter: transDate).snapshots(),
+                      builder: (context, items) {
+
+                        if (items.hasData) {
+
+                          final itemsData = items.data;
+
+                          return StreamBuilder(
+                            stream: calculateSum(itemsData),
+                            builder: (context, sum) {
+                              if (sum.hasData) {
+                                final sumData = sum.data;
+                                return ListTile(
+                                  shape: RoundedRectangleBorder(
+                                    side: const BorderSide(color: Colors.black, width: 1),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  title: Text(sumData!,
+                                    textAlign: TextAlign.end,
+                                  ),
+                                );
+                              }
+                              else{
+                                return ListTile(
+                                  shape: RoundedRectangleBorder(
+                                    side: const BorderSide(color: Colors.black, width: 1),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  title: const Text("0",
+                                    textAlign: TextAlign.end,
+                                  ),
+                                );
+                              }
+                            }
+                          );
+                        }
+                        else {
+                          return ListTile(
+                            shape: RoundedRectangleBorder(
+                              side: const BorderSide(color: Colors.black, width: 1),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            title: const Text("Loading"),
+                          );
+                        }
+                      },
                     ),
                   ),
                 ),
@@ -115,7 +146,7 @@ class _TodayListState extends State<TodayList> {
                                                 entryMode: ExpenseEntryMode.edit,
                                                 id: itemsData.docs[index].id,
                                                 model: ItemModel(
-                                                  amount: itemsData.docs[index][ItemModel.fieldAmount],
+                                                  amount: double.parse(itemsData.docs[index][ItemModel.fieldAmount]),
                                                   transDate: itemsData.docs[index][ItemModel.fieldDate],
                                                   category: itemsData.docs[index][ItemModel.fieldCategory],
                                                   name: itemsData.docs[index][ItemModel.fieldName],
@@ -132,12 +163,12 @@ class _TodayListState extends State<TodayList> {
                                     }
                                   },
                                   popUpMenuItemList: const [
-                                    PopupMenuItem<CategoryEntryMode>(
-                                        value: CategoryEntryMode.edit,
+                                    PopupMenuItem<ExpenseEntryMode>(
+                                        value: ExpenseEntryMode.edit,
                                         child: Text("Edit")
                                     ),
-                                    PopupMenuItem<CategoryEntryMode>(
-                                        value: CategoryEntryMode.delete,
+                                    PopupMenuItem<ExpenseEntryMode>(
+                                        value: ExpenseEntryMode.delete,
                                         child: Text("Delete")
                                     ),
                                   ],
@@ -195,4 +226,17 @@ class _TodayListState extends State<TodayList> {
       }
     );
   }
+
+  Stream<String> calculateSum(QuerySnapshot<ItemModel>? items) async* {
+    var formatter = NumberFormat('###,###,##0.00');
+    double sum = 0;
+    final itemsData = items?.docs.length ?? 0;
+
+    for(int i = 0; i < itemsData; i++){
+      sum = sum + double.parse(items?.docs[i][ItemModel.fieldAmount]);
+    }
+
+    yield formatter.format(sum).toString();
+  }
+
 }
