@@ -1,4 +1,4 @@
-import 'package:expense_tracker/pages/expenses/history.dart';
+import 'package:expense_tracker/pages/expenses/history_list.dart';
 import 'package:expense_tracker/pages/expenses/today_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -51,7 +51,7 @@ class _GenericPathfinderState extends State<GenericPathfinder> {
                   String path = "${Paths.users}/${userData.docs[0].id}/";
                   return TodayList(path: path);
                 case Pages.history:
-                  return const HistoryExpenses();
+                  return const HistoryList();
                 case Pages.category:
                   String path = "${Paths.users}/${userData.docs[0].id}/${Paths.category}";
                   return CategoryList(path: path);
