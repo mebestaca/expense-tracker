@@ -117,6 +117,7 @@ class _TodayDataEntryState extends State<TodayDataEntry> {
                         if (itemName.length < 2) {
                           errorText = "please enter an item name";
                         }
+                        return null;
                       },
                       decoration: fieldStyle.copyWith(
                           hintText: "item name",
@@ -154,6 +155,7 @@ class _TodayDataEntryState extends State<TodayDataEntry> {
                         if (amount.isEmpty) {
                           errorText = errorText.isEmpty ? "please enter an amount" : "$errorText\nplease enter an amount";
                         }
+                        return null;
                       },
                       decoration: fieldStyle.copyWith(
                           hintText: "amount",
@@ -218,7 +220,10 @@ class _TodayDataEntryState extends State<TodayDataEntry> {
                                 ItemModel.fieldName : itemName,
                                 ItemModel.fieldAmount : amount,
                                 ItemModel.fieldDate : transDate,
-                                ItemModel.fieldCategory : category
+                                ItemModel.fieldCategory : category,
+                                ItemModel.fieldYear : transDate.substring(0,4),
+                                ItemModel.fieldMonth : transDate.substring(5,7),
+                                ItemModel.fieldDay : transDate.substring(8,10)
                               };
 
                               final snackBar = SnackBar(
