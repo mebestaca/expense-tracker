@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../services/authentication.dart';
 import '../charts/charts.dart';
-import '../expenses/history.dart';
+import '../expenses/history_list.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class _HomeState extends State<Home> {
     const Charts(),
     const Placeholder(),
     const GenericPathfinder(pages: Pages.today),
-    const HistoryExpenses(),
+    const HistoryList(),
     const GenericPathfinder(pages: Pages.category),
   ];
 
