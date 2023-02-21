@@ -12,8 +12,11 @@ import '../../shared/widgets/loading_screen.dart';
 import '../../shared/widgets/today_data_entry.dart';
 
 class TodayList extends StatefulWidget {
-  const TodayList({Key? key, required this.path}) : super(key: key);
+  const TodayList({Key? key, required this.path, required this.year, required this.month, required this.day}) : super(key: key);
 
+  final String year;
+  final String month;
+  final String day;
   final String path;
 
   @override
@@ -31,8 +34,13 @@ class _TodayListState extends State<TodayList> {
 
   @override
   void initState() {
-    currentDate = DateTime.now();
+    currentDate = DateTime(
+        int.parse(widget.year),
+        int.parse(widget.month),
+        int.parse(widget.day)
+    );
     transDate = dateFormatter.format(currentDate);
+
     super.initState();
   }
 
