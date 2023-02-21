@@ -46,7 +46,7 @@ class _HistoryListState extends State<HistoryList> {
                         Navigator.pushNamed(context, Routes.genericRoute, arguments: {
                           "widget" : YearList(
                             year:yearListData[index],
-                            path: pathItem,
+                            path: widget.path,
                           ),
                           "title" : yearListData[index]
                         });
