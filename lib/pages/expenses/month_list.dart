@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracker/extensions/item_model_extension.dart';
+import 'package:expense_tracker/pages/expenses/today_list.dart';
 import 'package:flutter/material.dart';
 
+import '../../constants/paths.dart';
+import '../../constants/routes.dart';
 import '../../models/model_items.dart';
 import '../../services/database.dart';
 import '../../shared/widgets/generic_list_tile.dart';
@@ -22,7 +25,7 @@ class _MonthListState extends State<MonthList> {
   @override
   Widget build(BuildContext context) {
 
-    String pathItem = widget.path;
+    String pathItem = "${widget.path}${Paths.items}";
 
     return StreamBuilder(
         stream: DatabaseService(path: pathItem).getItemModelReference().
@@ -35,22 +38,30 @@ class _MonthListState extends State<MonthList> {
                 stream: getDay(itemsData),
                 builder: (context, dayList) {
                   if(dayList.hasData) {
-                    final monthListData = dayList.data;
+                    final dayListData = dayList.data;
 
                     return ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
-                        itemCount: monthListData?.length,
+                        itemCount: dayListData?.length,
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
-                              
+                              Navigator.pushNamed(context, Routes.genericRoute, arguments: {
+                                "widget" : TodayList(
+                                  path: widget.path,
+                                  year: widget.year,
+                                  month: widget.month,
+                                  day: dayListData[index],
+                                ),
+                                "title" : ''
+                              });
                             },
                             child: GenericListTile(
                               id: "",
                               path: "",
-                              title: monthListData![index],
+                              title: dayListData![index],
                               subTitle: "",
                               switchFunction: () {},
                               popUpMenuItemList: const [],
