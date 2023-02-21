@@ -1,7 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:expense_tracker/pages/expenses/year_list.dart';
 import 'package:flutter/material.dart';
 
+import '../../constants/paths.dart';
+import '../../constants/routes.dart';
+import '../../models/model_items.dart';
+import '../../services/database.dart';
+import '../../shared/widgets/generic_list_tile.dart';
+import '../../shared/widgets/loading_screen.dart';
+
 class HistoryList extends StatefulWidget {
-  const HistoryList({Key? key}) : super(key: key);
+  const HistoryList({Key? key, required this.path}) : super(key: key);
+
+  final String path;
 
   @override
   State<HistoryList> createState() => _HistoryListState();
@@ -10,6 +21,71 @@ class HistoryList extends StatefulWidget {
 class _HistoryListState extends State<HistoryList> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+
+    String pathItem = "${widget.path}${Paths.items}";
+
+    return StreamBuilder(
+      stream: DatabaseService(path: pathItem).getItemModelReference().snapshots(),
+      builder: (context, items) {
+        if (items.hasData) {
+          final itemsData = items.data;
+          return StreamBuilder(
+            stream: getYear(itemsData),
+            builder: (context, yearList) {
+              if(yearList.hasData) {
+                final yearListData = yearList.data;
+
+                return ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: yearListData?.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, Routes.genericRoute, arguments: {
+                          "widget" : YearList(
+                            year:yearListData[index],
+                            path: pathItem,
+                          ),
+                          "title" : yearListData[index]
+                        });
+                      },
+                      child: GenericListTile(
+                        id: "",
+                        path: "",
+                        title: yearListData![index],
+                        subTitle: "",
+                        switchFunction: () {},
+                        popUpMenuItemList: const [],
+                      ),
+                    );
+                  }
+                );
+              }
+              else{
+                return const Center(
+                  child: Text("No data found"),
+                );
+              }
+            }
+          );
+        }
+        else{
+          return const Loading();
+        }
+      }
+    );
+  }
+
+  Stream<List<String>> getYear(QuerySnapshot<ItemModel>? items) async* {
+    List<String> list = [];
+    final itemsData = items?.docs.length ?? 0;
+
+    for(int i = 0; i < itemsData; i++){
+      list.add(items?.docs[i][ItemModel.fieldYear]);
+    }
+
+    yield list.toSet().toList();
   }
 }
