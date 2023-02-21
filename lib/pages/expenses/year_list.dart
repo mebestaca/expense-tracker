@@ -3,6 +3,7 @@ import 'package:expense_tracker/constants/months.dart';
 import 'package:expense_tracker/extensions/item_model_extension.dart';
 import 'package:flutter/material.dart';
 
+import '../../constants/paths.dart';
 import '../../constants/routes.dart';
 import '../../models/model_items.dart';
 import '../../services/database.dart';
@@ -24,7 +25,7 @@ class _YearListState extends State<YearList> {
   @override
   Widget build(BuildContext context) {
 
-    String pathItem = widget.path;
+    String pathItem = "${widget.path}${Paths.items}";
 
     return StreamBuilder(
         stream: DatabaseService(path: pathItem).getItemModelReference().
@@ -50,7 +51,7 @@ class _YearListState extends State<YearList> {
                               Navigator.pushNamed(context, Routes.genericRoute, arguments: {
                                 "widget" : MonthList(
                                   year: widget.year,
-                                  path: pathItem,
+                                  path: widget.path,
                                   month: monthListData![index],
                                 ),
                                 "title" : intToMonth[int.parse(itemsData?.docs[index][ItemModel.fieldMonth])-1]
