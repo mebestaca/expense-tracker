@@ -4,7 +4,8 @@ import '../models/model_items.dart';
 
 enum ItemQueryModes{
   today,
-  year
+  year,
+  month
 }
 
 extension ItemQuery on Query<ItemModel> {
@@ -16,6 +17,10 @@ extension ItemQuery on Query<ItemModel> {
       case ItemQueryModes.year:
         return where(ItemModel.fieldYear, isEqualTo: filter).
           orderBy(ItemModel.fieldMonth, descending: false);
+      case ItemQueryModes.month:
+        return where(ItemModel.fieldYear, isEqualTo: filter.substring(0,4)).
+            where(ItemModel.fieldMonth, isEqualTo: filter.substring(4,6)).
+            orderBy(ItemModel.fieldDay, descending: false);
     }
   }
 }
