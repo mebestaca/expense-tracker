@@ -41,7 +41,7 @@ class _GenericListTileState extends State<GenericListTile> {
             textAlign: TextAlign.end,
           ),
         ),
-        trailing: GenericPopUpMenuButton(
+        trailing: widget.popUpMenuItemList.isEmpty ? const SizedBox() : GenericPopUpMenuButton(
           switchFunction: (item) async {
             widget.switchFunction(item);
           },
