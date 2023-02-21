@@ -3,10 +3,12 @@ import 'package:expense_tracker/constants/months.dart';
 import 'package:expense_tracker/extensions/item_model_extension.dart';
 import 'package:flutter/material.dart';
 
+import '../../constants/routes.dart';
 import '../../models/model_items.dart';
 import '../../services/database.dart';
 import '../../shared/widgets/generic_list_tile.dart';
 import '../../shared/widgets/loading_screen.dart';
+import 'month_list.dart';
 
 class YearList extends StatefulWidget {
   const YearList({Key? key, required this.year, required this.path}) : super(key: key);
@@ -45,20 +47,19 @@ class _YearListState extends State<YearList> {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
-                              /*
                               Navigator.pushNamed(context, Routes.genericRoute, arguments: {
-                                "widget" : YearList(
-                                  year:monthListData[index],
+                                "widget" : MonthList(
+                                  year: widget.year,
                                   path: pathItem,
+                                  month: monthListData![index],
                                 ),
-                                "title" : monthListData[index]
+                                "title" : intToMonth[int.parse(itemsData?.docs[index][ItemModel.fieldMonth])-1]
                               });
-                              */
                             },
                             child: GenericListTile(
                               id: "",
                               path: "",
-                              title: monthListData![index],
+                              title: intToMonth[int.parse(itemsData?.docs[index][ItemModel.fieldMonth])-1],
                               subTitle: "",
                               switchFunction: () {},
                               popUpMenuItemList: const [],
@@ -87,8 +88,8 @@ class _YearListState extends State<YearList> {
     final itemsData = items?.docs.length ?? 0;
 
     for(int i = 0; i < itemsData; i++){
-      String month = intToMonth[int.parse(items?.docs[i][ItemModel.fieldMonth])-1];
-      list.add(month);
+      // String month = intToMonth[int.parse(items?.docs[i][ItemModel.fieldMonth])-1];
+      list.add(items?.docs[i][ItemModel.fieldMonth]);
     }
 
     yield list.toSet().toList();
