@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracker/pages/expenses/year_list.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../constants/paths.dart';
 import '../../constants/routes.dart';
@@ -81,11 +82,26 @@ class _HistoryListState extends State<HistoryList> {
   Stream<List<String>> getYear(QuerySnapshot<ItemModel>? items) async* {
     List<String> list = [];
     final itemsData = items?.docs.length ?? 0;
+    // var formatter = NumberFormat('###,###,##0.00');
+    // double sum = 0;
 
     for(int i = 0; i < itemsData; i++){
+      // sum = sum + double.parse(items?.docs[i][ItemModel.fieldAmount]);
       list.add(items?.docs[i][ItemModel.fieldYear]);
     }
 
     yield list.toSet().toList();
+  }
+
+  Stream<String> getYearTotal(QuerySnapshot<ItemModel>? items, String year) async*{
+    var formatter = NumberFormat('###,###,##0.00');
+    double sum = 0;
+    final itemsData = items?.docs.length ?? 0;
+
+    for(int i = 0; i < itemsData; i++) {
+      sum = sum + double.parse(items?.docs[i][ItemModel.fieldAmount]);
+    }
+
+    yield formatter.format(sum).toString();
   }
 }
