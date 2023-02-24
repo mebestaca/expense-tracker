@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracker/extensions/item_model_extension.dart';
 import 'package:expense_tracker/pages/expenses/today_list.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../constants/paths.dart';
 import '../../constants/routes.dart';
@@ -58,13 +59,26 @@ class _MonthListState extends State<MonthList> {
                                 "title" : ''
                               });
                             },
-                            child: GenericListTile(
-                              id: "",
-                              path: "",
-                              title: dayListData![index],
-                              subTitle: "",
-                              switchFunction: () {},
-                              popUpMenuItemList: const [],
+                            child: StreamBuilder(
+                              stream: getDayTotal(itemsData, widget.year, widget.month, dayListData![index]),
+                              builder: (context, sum) {
+                                if (sum.hasData) {
+                                  final sumData = sum.data;
+                                  return GenericListTile(
+                                    id: "",
+                                    path: "",
+                                    title: dayListData[index],
+                                    subTitle: sumData.toString(),
+                                    switchFunction: () {},
+                                    popUpMenuItemList: const [],
+                                  );
+                                }
+                                else{
+                                  return const Center(
+                                    child: Text("Calculating"),
+                                  );
+                                }
+                              }
                             ),
                           );
                         }
@@ -95,4 +109,21 @@ class _MonthListState extends State<MonthList> {
 
     yield list.toSet().toList();
   }
+
+  Stream<String> getDayTotal(QuerySnapshot<ItemModel>? items, String year, String month, String day) async*{
+    var formatter = NumberFormat('###,###,##0.00');
+    double sum = 0;
+    final itemsData = items?.docs.length ?? 0;
+
+    for(int i = 0; i < itemsData; i++) {
+      if (items?.docs[i][ItemModel.fieldYear] == year &&
+          items?.docs[i][ItemModel.fieldMonth] == month &&
+          items?.docs[i][ItemModel.fieldDay] == day){
+        sum = sum + double.parse(items?.docs[i][ItemModel.fieldAmount]);
+      }
+    }
+
+    yield formatter.format(sum).toString();
+  }
+
 }
