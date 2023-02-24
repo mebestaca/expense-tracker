@@ -52,13 +52,28 @@ class _HistoryListState extends State<HistoryList> {
                           "title" : yearListData[index]
                         });
                       },
-                      child: GenericListTile(
-                        id: "",
-                        path: "",
-                        title: yearListData![index],
-                        subTitle: "",
-                        switchFunction: () {},
-                        popUpMenuItemList: const [],
+                      child: StreamBuilder(
+                        stream: getYearTotal(itemsData, yearListData![index]),
+                        builder: (context, sum) {
+
+                          if (sum.hasData) {
+                            final sumData = sum.data;
+
+                            return GenericListTile(
+                              id: "",
+                              path: "",
+                              title: yearListData[index],
+                              subTitle: sumData.toString(),
+                              switchFunction: () {},
+                              popUpMenuItemList: const [],
+                            );
+                          }
+                          else{
+                            return const Center(
+                              child: Text("Calculating"),
+                            );
+                          }
+                        }
                       ),
                     );
                   }
@@ -99,7 +114,9 @@ class _HistoryListState extends State<HistoryList> {
     final itemsData = items?.docs.length ?? 0;
 
     for(int i = 0; i < itemsData; i++) {
-      sum = sum + double.parse(items?.docs[i][ItemModel.fieldAmount]);
+      if (items?.docs[i][ItemModel.fieldYear] == year){
+        sum = sum + double.parse(items?.docs[i][ItemModel.fieldAmount]);
+      }
     }
 
     yield formatter.format(sum).toString();
