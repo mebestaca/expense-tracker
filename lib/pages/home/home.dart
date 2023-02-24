@@ -49,11 +49,24 @@ class _HomeState extends State<Home> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
-              const DrawerHeader(
+              DrawerHeader(
                 decoration: BoxDecoration(
-                  color: Colors.blue
+                  color: Theme.of(context).primaryColor,
+                  image: const DecorationImage(
+                    image: AssetImage("assets/expense-tracker.png"),
+                    fit: BoxFit.fill,
+                    alignment: Alignment.bottomLeft
+                  )
                 ),
-                child: Text("Expense Tracker"),
+                child: Container(
+                  alignment: Alignment.bottomLeft,
+                  child: Text("Expense Tracker",
+                    style: TextStyle(
+                        fontSize: 30.0,
+                        color: Theme.of(context).canvasColor
+                    ),
+                  ),
+                ),
               ),
               ListTile(
                 title: Text(_widgetTitles[0]),
