@@ -104,7 +104,6 @@ class _YearListState extends State<YearList> {
     final itemsData = items?.docs.length ?? 0;
 
     for(int i = 0; i < itemsData; i++){
-      // String month = intToMonth[int.parse(items?.docs[i][ItemModel.fieldMonth])-1];
       list.add(items?.docs[i][ItemModel.fieldMonth]);
     }
 
