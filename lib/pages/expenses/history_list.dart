@@ -97,11 +97,8 @@ class _HistoryListState extends State<HistoryList> {
   Stream<List<String>> getYear(QuerySnapshot<ItemModel>? items) async* {
     List<String> list = [];
     final itemsData = items?.docs.length ?? 0;
-    // var formatter = NumberFormat('###,###,##0.00');
-    // double sum = 0;
 
     for(int i = 0; i < itemsData; i++){
-      // sum = sum + double.parse(items?.docs[i][ItemModel.fieldAmount]);
       list.add(items?.docs[i][ItemModel.fieldYear]);
     }
 
