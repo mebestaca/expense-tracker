@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracker/constants/months.dart';
 import 'package:expense_tracker/extensions/item_model_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../constants/paths.dart';
 import '../../constants/routes.dart';
@@ -57,13 +58,27 @@ class _YearListState extends State<YearList> {
                                 "title" : intToMonth[int.parse(itemsData?.docs[index][ItemModel.fieldMonth])-1]
                               });
                             },
-                            child: GenericListTile(
-                              id: "",
-                              path: "",
-                              title: intToMonth[int.parse(itemsData?.docs[index][ItemModel.fieldMonth])-1],
-                              subTitle: "",
-                              switchFunction: () {},
-                              popUpMenuItemList: const [],
+                            child: StreamBuilder(
+                              stream: getMonthTotal(itemsData, widget.year, itemsData?.docs[index][ItemModel.fieldMonth]),
+                              builder: (context, sum){
+                                if (sum.hasData) {
+                                  final sumData = sum.data;
+
+                                  return GenericListTile(
+                                    id: "",
+                                    path: "",
+                                    title: intToMonth[int.parse(itemsData?.docs[index][ItemModel.fieldMonth])-1],
+                                    subTitle: sumData.toString(),
+                                    switchFunction: () {},
+                                    popUpMenuItemList: const [],
+                                  );
+                                }
+                                else{
+                                  return const Center(
+                                    child: Text("Calculating"),
+                                  );
+                                }
+                              },
                             ),
                           );
                         }
@@ -95,4 +110,20 @@ class _YearListState extends State<YearList> {
 
     yield list.toSet().toList();
   }
+
+  Stream<String> getMonthTotal(QuerySnapshot<ItemModel>? items, String year, String month) async*{
+    var formatter = NumberFormat('###,###,##0.00');
+    double sum = 0;
+    final itemsData = items?.docs.length ?? 0;
+
+    for(int i = 0; i < itemsData; i++) {
+      if (items?.docs[i][ItemModel.fieldYear] == year &&
+          items?.docs[i][ItemModel.fieldMonth] == month){
+        sum = sum + double.parse(items?.docs[i][ItemModel.fieldAmount]);
+      }
+    }
+
+    yield formatter.format(sum).toString();
+  }
+
 }
