@@ -60,10 +60,9 @@ class _HomeState extends State<Home> {
                 ),
                 child: Container(
                   alignment: Alignment.bottomLeft,
-                  child: Text("Expense Tracker",
+                  child: const Text("Expense Tracker",
                     style: TextStyle(
                         fontSize: 30.0,
-                        color: Theme.of(context).canvasColor
                     ),
                   ),
                 ),
