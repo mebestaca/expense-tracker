@@ -44,10 +44,21 @@ dependencies:
   intl: ^0.17.0
   syncfusion_flutter_calendar: ^20.4.49
   syncfusion_flutter_charts: ^20.4.51
+  flutter_launcher_icons: ^0.12.0
+  flutter_native_splash: ^2.2.18
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/expense-tracker.png"
+
+flutter_native_splash:
+  color: "#50c7c7"
+  image: "assets/expense-tracker-splash.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

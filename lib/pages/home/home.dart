@@ -54,7 +54,7 @@ class _HomeState extends State<Home> {
                   color: Theme.of(context).primaryColor,
                   image: const DecorationImage(
                     image: AssetImage("assets/expense-tracker.png"),
-                    fit: BoxFit.fill,
+                    fit: BoxFit.scaleDown,
                     alignment: Alignment.bottomLeft
                   )
                 ),
