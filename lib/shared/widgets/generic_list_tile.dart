@@ -37,7 +37,7 @@ class _GenericListTileState extends State<GenericListTile> {
         title: Text(widget.title),
         subtitle: SizedBox(
           width: double.infinity,
-          child: Text(widget.subTitle.isNotEmpty ? formatter.format(double.parse(widget.subTitle)) : widget.subTitle,
+          child: Text(widget.subTitle.isNotEmpty ? formatter.format(double.parse(widget.subTitle.replaceAll(",", ""))) : widget.subTitle,
             textAlign: TextAlign.end,
           ),
         ),
