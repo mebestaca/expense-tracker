@@ -1,4 +1,4 @@
-# expense_tracker
+# Expense-Tracker
 
 A flutter project designed to track user expenses and provide meaningful reports.
 
