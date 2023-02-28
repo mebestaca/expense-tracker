@@ -1,5 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:expense_tracker/services/database.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+
+import '../../constants/paths.dart';
+import '../../extensions/item_model_extension.dart';
+import '../../extensions/user_model_extension.dart';
+import '../../models/model_chart.dart';
+import '../../models/model_items.dart';
+import '../../models/model_user.dart';
+import '../../shared/widgets/loading_screen.dart';
 
 class Charts extends StatefulWidget {
   const Charts({Key? key}) : super(key: key);
@@ -10,92 +22,141 @@ class Charts extends StatefulWidget {
 
 class _ChartsState extends State<Charts> {
 
-  late List<_ChartData> data;
+  late String transDate;
+  late DateTime currentDate;
+  final dateFormatter = DateFormat("yyyy-MM-dd");
 
   @override
   void initState() {
-    data = [
-      _ChartData('David', 25),
-      _ChartData('Steve', 38),
-      _ChartData('Jack', 34),
-      _ChartData('Others', 52)
-    ];
+    currentDate = DateTime.now();
+    transDate = dateFormatter.format(currentDate);
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          ExpansionTile(
-            title: const Text("Today"),
-            children: [
-              const Divider(
-                height: 10.0,
-              ),
-              SfCircularChart(
-                annotations: [
-                  CircularChartAnnotation(
-                    widget: const Text("Categories")
-                  )
-                ],
-                legend: Legend(
-                  isVisible: true,
-                ),
-                series: <CircularSeries<_ChartData, String>>[
-                  DoughnutSeries<_ChartData, String>(
-                    dataSource: data,
-                    xValueMapper: (_ChartData data, _) => data.x,
-                    yValueMapper: (_ChartData data, _) => data.y,
-                    dataLabelSettings: const DataLabelSettings(isVisible: true),
-                  explode: true,
-                  explodeAll: true,
-                  explodeOffset: "3"),
+    final loginInfo = Provider.of<UserModel?>(context, listen: false);
 
-                ]
-              )
-            ],
-          ),
-          ExpansionTile(
-            title: const Text("This month"),
-            children: [
-              SfCircularChart(
-                  series: <CircularSeries<_ChartData, String>>[
-                    DoughnutSeries<_ChartData, String>(
-                        dataSource: data,
-                        xValueMapper: (_ChartData data, _) => data.x,
-                        yValueMapper: (_ChartData data, _) => data.y,
-                        name: "Gold"
+    return FutureBuilder(
+        future: DatabaseService(path: Paths.users).getUserModelReference().
+        queryBy(UserQueryModes.userData, filter: loginInfo?.uid ?? "").get(),
+        builder: (context, user) {
+          if (user.hasData) {
+            final userData = user.requireData;
+            String pathItems = "${Paths.users}/${userData.docs[0].id}/${Paths.items}";
+            String pathCategories = "${Paths.users}/${userData.docs[0].id}/${Paths.category}";
+
+            return StreamBuilder(
+              stream: DatabaseService(path: pathCategories).getCategoryModelReference().snapshots(),
+              builder: (context, categories) {
+                if (categories.hasData) {
+                  final categoriesData = categories.requireData;
+
+                  List<String> categoriesList = categoriesData.docs.map((
+                      docs) {
+                    return docs.data().category;
+                  }).toList();
+                  categoriesList.add("Uncategorized");
+                  categoriesList = categoriesList.toSet().toList();
+
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ExpansionTile(
+                          title: const Text("Today"),
+                          children: [
+                            const Divider(height: 10),
+                            StreamBuilder(
+                                stream: DatabaseService(path: pathItems).getItemModelReference().
+                                queryBy(ItemQueryModes.today, filter: transDate).snapshots(),
+                                builder: (context, item) {
+
+                                  if (item.hasData) {
+                                    final itemData = item.data;
+
+                                    return StreamBuilder(
+                                      stream: convertToChartData(itemData, categoriesList),
+                                      builder: (context, chart) {
+
+                                        if (chart.hasData) {
+                                          final chartData = chart.data;
+                                          return SfCircularChart(
+                                              annotations: [
+                                                CircularChartAnnotation(
+                                                    widget: const Text("Categories")
+                                                )
+                                              ],
+                                              legend: Legend(
+                                                isVisible: true,
+                                              ),
+                                              series: <CircularSeries<ChartData, String>>[
+                                                DoughnutSeries<ChartData, String>(
+                                                    dataSource: chartData,
+                                                    xValueMapper: (ChartData data, _) => data.name,
+                                                    yValueMapper: (ChartData data, _) => data.amount,
+                                                    dataLabelSettings: const DataLabelSettings(isVisible: true),
+                                                    explode: true,
+                                                    explodeAll: true,
+                                                    explodeOffset: "3"),
+
+                                              ]
+                                          );
+
+                                        }
+                                        else {
+                                          return const Loading();
+                                        }
+                                      },
+                                    );
+                                  }
+                                  else{
+                                    return const Center(
+                                      child: Text("No Data"),
+                                    );
+                                  }
+                                }
+                            )
+                          ],
+                        )
+                      ],
                     ),
-                  ]
-              )
-            ],
-          ),
-          ExpansionTile(
-            title: const Text("This year"),
-            children: [
-              SfCircularChart(
-                series: <CircularSeries<_ChartData, String>>[
-                    DoughnutSeries<_ChartData, String>(
-                      dataSource: data,
-                      xValueMapper: (_ChartData data, _) => data.x,
-                      yValueMapper: (_ChartData data, _) => data.y,
-                      name: "Gold"
-                    ),
-                  ]
-              )
-            ],
-          ),
-        ],
-      ),
+                  );
+                }
+                else{
+                  return const Loading();
+                }
+              }
+            );
+          }
+          else {
+            return const Loading();
+          }
+        }
     );
   }
-}
 
-class _ChartData {
-  _ChartData(this.x, this.y);
 
-  final String x;
-  final double y;
+  Stream<List<ChartData>> convertToChartData(QuerySnapshot<ItemModel>? items, List<String> categoryList) async*{
+
+    List<ChartData> chartData = [];
+    final itemsData = items?.docs.length ?? 0;
+    for(String category in categoryList) {
+      double sum = 0;
+      for(int i = 0; i < itemsData; i++) {
+        if (items?.docs[i][ItemModel.fieldCategory] == category){
+          sum = sum + double.parse(items?.docs[i][ItemModel.fieldAmount]);
+        }
+      }
+      ChartData data = ChartData(
+          name:  category,
+          amount:  sum
+      );
+      chartData.add(data);
+    }
+
+    chartData.removeWhere((e) => e.amount == 0);
+
+    yield chartData;
+  }
 }
