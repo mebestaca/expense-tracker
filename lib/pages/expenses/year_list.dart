@@ -53,13 +53,13 @@ class _YearListState extends State<YearList> {
                                 "widget" : MonthList(
                                   year: widget.year,
                                   path: widget.path,
-                                  month: monthListData![index],
+                                  month: monthListData[index],
                                 ),
-                                "title" : intToMonth[int.parse(itemsData?.docs[index][ItemModel.fieldMonth])-1]
+                                "title" : intToMonth[int.parse(monthListData[index])-1]
                               });
                             },
                             child: StreamBuilder(
-                              stream: getMonthTotal(itemsData, widget.year, itemsData?.docs[index][ItemModel.fieldMonth]),
+                              stream: getMonthTotal(itemsData, widget.year, monthListData![index]),
                               builder: (context, sum){
                                 if (sum.hasData) {
                                   final sumData = sum.data;
@@ -67,7 +67,7 @@ class _YearListState extends State<YearList> {
                                   return GenericListTile(
                                     id: "",
                                     path: "",
-                                    title: intToMonth[int.parse(itemsData?.docs[index][ItemModel.fieldMonth])-1],
+                                    title: intToMonth[int.parse(monthListData[index])-1],
                                     subTitle: sumData.toString(),
                                     switchFunction: () {},
                                     popUpMenuItemList: const [],
