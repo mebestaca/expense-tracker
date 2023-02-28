@@ -131,7 +131,64 @@ class _ChartsState extends State<Charts> {
                                   queryBy(ItemQueryModes.month, filter: "${transDate.substring(0,4)}${transDate.substring(5,7)}").snapshots(),
                                   builder: (context, item) {
 
+                                    if (item.hasData) {
+                                      final itemData = item.data;
 
+                                      return StreamBuilder(
+                                        stream: convertToChartData(itemData, categoriesList),
+                                        builder: (context, chart) {
+
+                                          if (chart.hasData) {
+                                            final chartData = chart.data;
+                                            return SfCircularChart(
+                                                annotations: [
+                                                  CircularChartAnnotation(
+                                                      widget: const Text("Categories")
+                                                  )
+                                                ],
+                                                legend: Legend(
+                                                  isVisible: true,
+                                                ),
+                                                series: <CircularSeries<ChartData, String>>[
+                                                  DoughnutSeries<ChartData, String>(
+                                                      dataSource: chartData,
+                                                      xValueMapper: (ChartData data, _) => data.name,
+                                                      yValueMapper: (ChartData data, _) => data.amount,
+                                                      dataLabelSettings: const DataLabelSettings(isVisible: true),
+                                                      explode: true,
+                                                      explodeAll: true,
+                                                      explodeOffset: "3"),
+
+                                                ]
+                                            );
+
+                                          }
+                                          else {
+                                            return const Loading();
+                                          }
+                                        },
+                                      );
+                                    }
+                                    else{
+                                      return const Center(
+                                        child: Text("No Data"),
+                                      );
+                                    }
+                                  }
+                              )
+                            ],
+                          ),
+                        ),
+                        Card(
+                          child: ExpansionTile(
+
+                            title: const Text("This Year"),
+                            children: [
+                              const Divider(thickness: 1),
+                              StreamBuilder(
+                                  stream: DatabaseService(path: pathItems).getItemModelReference().
+                                  queryBy(ItemQueryModes.year, filter: transDate.substring(0,4)).snapshots(),
+                                  builder: (context, item) {
 
                                     if (item.hasData) {
                                       final itemData = item.data;
