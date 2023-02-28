@@ -8,11 +8,8 @@ A flutter project designed to track user expenses and provide meaningful reports
  - [Categories] - Custom categories per user
  - [Authentication] - User Authentication to prevent data loss when using multiple devices
 
-## Maybe
- - Web version
-
 ## Current Progress
- - [Charts] - [0/100]
+ - [Charts] - [100/100]
  - [Reports] - [100/100]
  - [Categories] - [100/100]
  - [Authentication] - [100/100]
