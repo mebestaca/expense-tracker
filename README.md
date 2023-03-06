@@ -7,6 +7,7 @@ A flutter project designed to track user expenses and provide meaningful reports
  - [Reports] - Shows the total amount spent per day/week/month
  - [Categories] - Custom categories per user
  - [Authentication] - User Authentication to prevent data loss when using multiple devices
+ - [Search] - all modules supports smart search
 
 ## Current Progress
  - [Charts] - [100/100]
