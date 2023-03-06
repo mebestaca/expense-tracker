@@ -56,7 +56,7 @@ class _MonthListState extends State<MonthList> {
                                   month: widget.month,
                                   day: dayListData[index],
                                 ),
-                                "title" : ''
+                                "title" : dayListData[index]
                               });
                             },
                             child: StreamBuilder(
