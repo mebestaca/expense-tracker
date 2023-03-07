@@ -9,12 +9,6 @@ A flutter project designed to track user expenses and provide meaningful reports
  - [Authentication] - User Authentication to prevent data loss when using multiple devices
  - [Search] - all modules supports smart search
 
-## Current Progress
- - [Charts] - [100/100]
- - [Reports] - [100/100]
- - [Categories] - [100/100]
- - [Authentication] - [100/100]
-
 ## Technology Used
 - Flutter
 - Firebase Firestore
