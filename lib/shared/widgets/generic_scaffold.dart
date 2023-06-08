@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'background.dart';
+
 class GenericScaffold extends StatefulWidget {
   const GenericScaffold({Key? key}) : super(key: key);
 
@@ -32,7 +34,12 @@ class _GenericScaffoldState extends State<GenericScaffold> {
       appBar: AppBar(
         title: Text(_title),
       ),
-      body: _widgetBody,
+      body: Stack(
+        children: [
+          const Background(),
+          _widgetBody,
+        ],
+      ),
     );
   }
 }
