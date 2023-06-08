@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../models/model_items.dart';
 import '../../services/database.dart';
 import '../text_decoration.dart';
+import 'background.dart';
 import 'error_card.dart';
 import 'loading_screen.dart';
 
@@ -79,197 +80,199 @@ class _TodayDataEntryState extends State<TodayDataEntry> {
         children: [
           Form(
             key: formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Visibility(
-                  visible: errorText.isNotEmpty ? true : false,
-                  child: ErrorCard(errorText: errorText),
-                ),
-                Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: TextFormField(
-                      readOnly: true,
-                      controller: transDateController,
-                      decoration: fieldStyle.copyWith(
-                        hintText: "date",
-                        labelText: "date",
-                        suffixIcon: IconButton(
-                            onPressed: () => _selectDate(context),
-                            icon: const Icon(Icons.calendar_month)
-                        )
-                      ),
-                      onChanged: (val) {
-                        setState(() {
-                          transDate = val;
-                        });
-                      },
-                    ),
+            child: Card(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Visibility(
+                    visible: errorText.isNotEmpty ? true : false,
+                    child: ErrorCard(errorText: errorText),
                   ),
-                ),
-                Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: TextFormField(
-                      controller: itemNameController,
-                      validator: (val) {
-                        if (itemName.length < 2) {
-                          errorText = "please enter an item name";
-                        }
-                        return null;
-                      },
-                      decoration: fieldStyle.copyWith(
-                          hintText: "item name",
-                          labelText: "item name"
-                      ),
-                      onChanged: (val) {
-                        setState(() {
-                          errorText = "";
-                          itemName = val;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-                Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: TextFormField(
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
-                      inputFormatters:  [
-                        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-                        TextInputFormatter.withFunction((oldValue, newValue) {
-                        try{
-                          final text = newValue.text;
-                          if (text.isNotEmpty) double.parse(text);
-                          return newValue;
-                        }catch (e) {
-                          null;
-                        }
-                        return oldValue;
-                      }),
-                      ],
-                      controller: amountController,
-                      validator: (val) {
-                        if (amount.isEmpty) {
-                          errorText = errorText.isEmpty ? "please enter an amount" : "$errorText\nplease enter an amount";
-                        }
-                        return null;
-                      },
-                      decoration: fieldStyle.copyWith(
-                          hintText: "amount",
-                          labelText: "amount"
-                      ),
-                      onChanged: (val) {
-                        setState(() {
-                          errorText = "";
-                          amount = val;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-                Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
-                            border: Border.all(color: Colors.black)
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextFormField(
+                        readOnly: true,
+                        controller: transDateController,
+                        decoration: fieldStyle.copyWith(
+                          hintText: "date",
+                          labelText: "date",
+                          suffixIcon: IconButton(
+                              onPressed: () => _selectDate(context),
+                              icon: const Icon(Icons.calendar_month)
+                          )
                         ),
-                        child: DropdownButton(
-                          underline: const SizedBox(),
-                          isExpanded: true,
-                          value: category,
-                          items: widget.categoryList.map((categories) {
-                            return DropdownMenuItem(
-                                value: categories,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Text(categories),
-                                )
-                            );
-                          }).toList(),
-                          onChanged: (val) {
-                            setState(() {
-                              category = val!;
-                            });
+                        onChanged: (val) {
+                          setState(() {
+                            transDate = val;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextFormField(
+                        controller: itemNameController,
+                        validator: (val) {
+                          if (itemName.length < 2) {
+                            errorText = "please enter an item name";
                           }
+                          return null;
+                        },
+                        decoration: fieldStyle.copyWith(
+                            hintText: "item name",
+                            labelText: "item name"
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            errorText = "";
+                            itemName = val;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextFormField(
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
+                        inputFormatters:  [
+                          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                          TextInputFormatter.withFunction((oldValue, newValue) {
+                          try{
+                            final text = newValue.text;
+                            if (text.isNotEmpty) double.parse(text);
+                            return newValue;
+                          }catch (e) {
+                            null;
+                          }
+                          return oldValue;
+                        }),
+                        ],
+                        controller: amountController,
+                        validator: (val) {
+                          if (amount.isEmpty) {
+                            errorText = errorText.isEmpty ? "please enter an amount" : "$errorText\nplease enter an amount";
+                          }
+                          return null;
+                        },
+                        decoration: fieldStyle.copyWith(
+                            hintText: "amount",
+                            labelText: "amount"
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            errorText = "";
+                            amount = val;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5.0),
+                              border: Border.all(color: Colors.black)
+                          ),
+                          child: DropdownButton(
+                            underline: const SizedBox(),
+                            isExpanded: true,
+                            value: category,
+                            items: widget.categoryList.map((categories) {
+                              return DropdownMenuItem(
+                                  value: categories,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(categories),
+                                  )
+                              );
+                            }).toList(),
+                            onChanged: (val) {
+                              setState(() {
+                                category = val!;
+                              });
+                            }
+                          ),
+                        ),
+                      ),
+                    )
+                  ),
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              if (formKey.currentState!.validate()){
+                                setState(() {
+
+                                });
+                                FocusScope.of(context).unfocus();
+
+                                Map<String, dynamic> data = {
+                                  ItemModel.fieldName : itemName,
+                                  ItemModel.fieldAmount : amount,
+                                  ItemModel.fieldDate : transDate,
+                                  ItemModel.fieldCategory : category,
+                                  ItemModel.fieldYear : transDate.substring(0,4),
+                                  ItemModel.fieldMonth : transDate.substring(5,7),
+                                  ItemModel.fieldDay : transDate.substring(8,10)
+                                };
+
+                                final snackBar = SnackBar(
+                                  content: Text("$itemName added"),
+                                  action: SnackBarAction(
+                                    label: "Ok",
+                                    onPressed: () {
+
+                                    },
+                                  ),
+                                );
+
+                                if (widget.entryMode == ExpenseEntryMode.add) {
+                                  await DatabaseService(path: widget.path).addEntry(data);
+
+                                  setState(() {
+                                    FocusManager.instance.primaryFocus?.unfocus();
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                                    itemName = "";
+                                    itemNameController.clear();
+                                    amount = "";
+                                    amountController.clear();
+                                    currentDate = DateTime.now();
+                                    transDate = dateFormatter.format(currentDate);
+                                    transDateController.text = transDate;
+                                    category = widget.categoryList.first;
+
+                                  });
+                                }
+
+                                if (widget.entryMode == ExpenseEntryMode.edit) {
+                                  await DatabaseService(path: widget.path).updateEntry(data, widget.id).then((value) {
+                                    FocusManager.instance.primaryFocus?.unfocus();
+                                    Navigator.pop(context);
+                                  });
+                                }
+
+                              }
+                            },
+                            child: const Text("Confirm")
                         ),
                       ),
                     ),
                   )
-                ),
-                Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            if (formKey.currentState!.validate()){
-                              setState(() {
-
-                              });
-                              FocusScope.of(context).unfocus();
-
-                              Map<String, dynamic> data = {
-                                ItemModel.fieldName : itemName,
-                                ItemModel.fieldAmount : amount,
-                                ItemModel.fieldDate : transDate,
-                                ItemModel.fieldCategory : category,
-                                ItemModel.fieldYear : transDate.substring(0,4),
-                                ItemModel.fieldMonth : transDate.substring(5,7),
-                                ItemModel.fieldDay : transDate.substring(8,10)
-                              };
-
-                              final snackBar = SnackBar(
-                                content: Text("$itemName added"),
-                                action: SnackBarAction(
-                                  label: "Ok",
-                                  onPressed: () {
-
-                                  },
-                                ),
-                              );
-
-                              if (widget.entryMode == ExpenseEntryMode.add) {
-                                await DatabaseService(path: widget.path).addEntry(data);
-
-                                setState(() {
-                                  FocusManager.instance.primaryFocus?.unfocus();
-                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-                                  itemName = "";
-                                  itemNameController.clear();
-                                  amount = "";
-                                  amountController.clear();
-                                  currentDate = DateTime.now();
-                                  transDate = dateFormatter.format(currentDate);
-                                  transDateController.text = transDate;
-                                  category = widget.categoryList.first;
-
-                                });
-                              }
-
-                              if (widget.entryMode == ExpenseEntryMode.edit) {
-                                await DatabaseService(path: widget.path).updateEntry(data, widget.id).then((value) {
-                                  FocusManager.instance.primaryFocus?.unfocus();
-                                  Navigator.pop(context);
-                                });
-                              }
-
-                            }
-                          },
-                          child: const Text("Confirm")
-                      ),
-                    ),
-                  ),
-                )
-              ],
+                ],
+              ),
             ),
           ),
           Visibility(
