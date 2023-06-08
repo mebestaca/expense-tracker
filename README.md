@@ -14,9 +14,10 @@ A flutter project designed to track user expenses and provide meaningful reports
 - Firebase Firestore
 
 ## Screenshots
-![alt text](https://github.com/mebestaca/expense-tracker/blob/master/screenshots/screenshot_1.png?raw=true)
-![alt text](https://github.com/mebestaca/expense-tracker/blob/master/screenshots/screenshot_2.png?raw=true)
-![alt text](https://github.com/mebestaca/expense-tracker/blob/master/screenshots/screenshot_3x.png?raw=true)
-![alt text](https://github.com/mebestaca/expense-tracker/blob/master/screenshots/screenshot_4.png?raw=true)
+![alt text](https://github.com/mebestaca/expense-tracker/blob/master/screenshots/screenshot_group_1.png?raw=true)
+![alt text](https://github.com/mebestaca/expense-tracker/blob/master/screenshots/screenshot_group_2.png?raw=true)
+![alt text](https://github.com/mebestaca/expense-tracker/blob/master/screenshots/screenshot_group_3.png?raw=true)
+![alt text](https://github.com/mebestaca/expense-tracker/blob/master/screenshots/screenshot_group_4.png?raw=true)
+![alt text](https://github.com/mebestaca/expense-tracker/blob/master/screenshots/screenshot_group_5.png?raw=true)
 
 
