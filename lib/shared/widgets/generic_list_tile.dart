@@ -29,23 +29,25 @@ class _GenericListTileState extends State<GenericListTile> {
         horizontal: 10.0,
         vertical: 3.0
       ),
-      child: ListTile(
-        shape: RoundedRectangleBorder(
-            side: const BorderSide(color: Colors.black, width: 1),
-            borderRadius: BorderRadius.circular(5),
-        ),
-        title: Text(widget.title),
-        subtitle: SizedBox(
-          width: double.infinity,
-          child: Text(widget.subTitle.isNotEmpty ? formatter.format(double.parse(widget.subTitle.replaceAll(",", ""))) : widget.subTitle,
-            textAlign: TextAlign.end,
+      child: Card(
+        child: ListTile(
+          shape: RoundedRectangleBorder(
+              side: const BorderSide(color: Colors.black, width: 1),
+              borderRadius: BorderRadius.circular(5),
           ),
-        ),
-        trailing: widget.popUpMenuItemList.isEmpty ? const SizedBox() : GenericPopUpMenuButton(
-          switchFunction: (item) async {
-            widget.switchFunction(item);
-          },
-          popUpMenuItemList: widget.popUpMenuItemList,
+          title: Text(widget.title),
+          subtitle: SizedBox(
+            width: double.infinity,
+            child: Text(widget.subTitle.isNotEmpty ? formatter.format(double.parse(widget.subTitle.replaceAll(",", ""))) : widget.subTitle,
+              textAlign: TextAlign.end,
+            ),
+          ),
+          trailing: widget.popUpMenuItemList.isEmpty ? const SizedBox() : GenericPopUpMenuButton(
+            switchFunction: (item) async {
+              widget.switchFunction(item);
+            },
+            popUpMenuItemList: widget.popUpMenuItemList,
+          ),
         ),
       ),
     );
