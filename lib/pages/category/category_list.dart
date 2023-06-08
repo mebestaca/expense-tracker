@@ -1,3 +1,4 @@
+import 'package:expense_tracker/shared/white_style.dart';
 import 'package:expense_tracker/shared/widgets/generic_list_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -120,8 +121,10 @@ class _CategoryListState extends State<CategoryList> {
                         }
                     );
                   }
-                  return const Center(
-                    child: Text("No data found"),
+                  return Center(
+                    child: Text("No data found",
+                      style: whiteStyle,
+                    ),
                   );
                 }
                 else{
