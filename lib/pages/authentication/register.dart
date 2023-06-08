@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../services/authentication.dart';
+import '../../shared/widgets/background.dart';
 import '../../shared/widgets/error_card.dart';
 import '../../shared/text_decoration.dart';
 import '../../shared/widgets/loading_screen.dart';
@@ -31,6 +32,7 @@ class _RegisterState extends State<Register> {
       body:
       Stack(
         children: [
+          const Background(),
           Center(
             child: SafeArea(
               child: SingleChildScrollView(
