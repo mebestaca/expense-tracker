@@ -82,27 +82,34 @@ class _ChartsState extends State<Charts> {
 
                                           if (chart.hasData) {
                                             final chartData = chart.data;
-                                            return SfCircularChart(
-                                                annotations: [
-                                                  CircularChartAnnotation(
-                                                      widget: const Text("Categories")
-                                                  )
-                                                ],
-                                                legend: Legend(
-                                                  isVisible: true,
-                                                ),
-                                                series: <CircularSeries<ChartData, String>>[
-                                                  DoughnutSeries<ChartData, String>(
-                                                      dataSource: chartData,
-                                                      xValueMapper: (ChartData data, _) => data.name,
-                                                      yValueMapper: (ChartData data, _) => data.amount,
-                                                      dataLabelSettings: const DataLabelSettings(isVisible: true),
-                                                      explode: true,
-                                                      explodeAll: true,
-                                                      explodeOffset: "3"),
+                                            if (chartData!.length > 0) {
+                                              return SfCircularChart(
+                                                  annotations: [
+                                                    CircularChartAnnotation(
+                                                        widget: const Text("Categories")
+                                                    )
+                                                  ],
+                                                  legend: Legend(
+                                                    isVisible: true,
+                                                  ),
+                                                  series: <CircularSeries<ChartData, String>>[
+                                                    DoughnutSeries<ChartData, String>(
+                                                        dataSource: chartData,
+                                                        xValueMapper: (ChartData data, _) => data.name,
+                                                        yValueMapper: (ChartData data, _) => data.amount,
+                                                        dataLabelSettings: const DataLabelSettings(isVisible: true),
+                                                        explode: true,
+                                                        explodeAll: true,
+                                                        explodeOffset: "3"),
 
-                                                ]
-                                            );
+                                                  ]
+                                              );
+                                            }
+                                            else{
+                                              return const Center(
+                                                child: Text("No Data"),
+                                              );
+                                            }
 
                                           }
                                           else {
@@ -140,27 +147,35 @@ class _ChartsState extends State<Charts> {
 
                                           if (chart.hasData) {
                                             final chartData = chart.data;
-                                            return SfCircularChart(
-                                                annotations: [
-                                                  CircularChartAnnotation(
-                                                      widget: const Text("Categories")
-                                                  )
-                                                ],
-                                                legend: Legend(
-                                                  isVisible: true,
-                                                ),
-                                                series: <CircularSeries<ChartData, String>>[
-                                                  DoughnutSeries<ChartData, String>(
-                                                      dataSource: chartData,
-                                                      xValueMapper: (ChartData data, _) => data.name,
-                                                      yValueMapper: (ChartData data, _) => data.amount,
-                                                      dataLabelSettings: const DataLabelSettings(isVisible: true),
-                                                      explode: true,
-                                                      explodeAll: true,
-                                                      explodeOffset: "3"),
 
-                                                ]
-                                            );
+                                            if (chartData!.length > 0) {
+                                              return SfCircularChart(
+                                                  annotations: [
+                                                    CircularChartAnnotation(
+                                                        widget: const Text("Categories")
+                                                    )
+                                                  ],
+                                                  legend: Legend(
+                                                    isVisible: true,
+                                                  ),
+                                                  series: <CircularSeries<ChartData, String>>[
+                                                    DoughnutSeries<ChartData, String>(
+                                                        dataSource: chartData,
+                                                        xValueMapper: (ChartData data, _) => data.name,
+                                                        yValueMapper: (ChartData data, _) => data.amount,
+                                                        dataLabelSettings: const DataLabelSettings(isVisible: true),
+                                                        explode: true,
+                                                        explodeAll: true,
+                                                        explodeOffset: "3"),
+
+                                                  ]
+                                              );
+                                            }
+                                            else {
+                                              return const Center(
+                                                child: Text("No Data"),
+                                              );
+                                            }
 
                                           }
                                           else {
@@ -199,27 +214,35 @@ class _ChartsState extends State<Charts> {
 
                                           if (chart.hasData) {
                                             final chartData = chart.data;
-                                            return SfCircularChart(
-                                                annotations: [
-                                                  CircularChartAnnotation(
-                                                      widget: const Text("Categories")
-                                                  )
-                                                ],
-                                                legend: Legend(
-                                                  isVisible: true,
-                                                ),
-                                                series: <CircularSeries<ChartData, String>>[
-                                                  DoughnutSeries<ChartData, String>(
-                                                      dataSource: chartData,
-                                                      xValueMapper: (ChartData data, _) => data.name,
-                                                      yValueMapper: (ChartData data, _) => data.amount,
-                                                      dataLabelSettings: const DataLabelSettings(isVisible: true),
-                                                      explode: true,
-                                                      explodeAll: true,
-                                                      explodeOffset: "3"),
 
-                                                ]
-                                            );
+                                            if (chartData!.length > 0) {
+                                              return SfCircularChart(
+                                                  annotations: [
+                                                    CircularChartAnnotation(
+                                                        widget: const Text("Categories")
+                                                    )
+                                                  ],
+                                                  legend: Legend(
+                                                    isVisible: true,
+                                                  ),
+                                                  series: <CircularSeries<ChartData, String>>[
+                                                    DoughnutSeries<ChartData, String>(
+                                                        dataSource: chartData,
+                                                        xValueMapper: (ChartData data, _) => data.name,
+                                                        yValueMapper: (ChartData data, _) => data.amount,
+                                                        dataLabelSettings: const DataLabelSettings(isVisible: true),
+                                                        explode: true,
+                                                        explodeAll: true,
+                                                        explodeOffset: "3"),
+
+                                                  ]
+                                              );
+                                            }
+                                            else {
+                                              return const Center(
+                                                child: Text("No Data"),
+                                              );
+                                            }
 
                                           }
                                           else {
