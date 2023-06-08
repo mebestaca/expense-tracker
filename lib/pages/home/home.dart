@@ -2,6 +2,7 @@ import 'package:expense_tracker/shared/widgets/generic_pathfinder.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/authentication.dart';
+import '../../shared/widgets/background.dart';
 import '../charts/charts.dart';
 
 class Home extends StatefulWidget {
@@ -53,19 +54,12 @@ class _HomeState extends State<Home> {
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
                   image: const DecorationImage(
-                    image: AssetImage("assets/expense-tracker.png"),
+                    image: AssetImage("assets/expense-tracker-drawer.png"),
                     fit: BoxFit.scaleDown,
                     alignment: Alignment.bottomLeft
                   )
                 ),
-                child: Container(
-                  alignment: Alignment.bottomLeft,
-                  child: const Text("Expense Tracker",
-                    style: TextStyle(
-                        fontSize: 30.0,
-                    ),
-                  ),
-                ),
+                child: Container(),
               ),
               ListTile(
                 title: Text(_widgetTitles[0]),
@@ -108,8 +102,13 @@ class _HomeState extends State<Home> {
             ],
           ),
         ),
-        body: Container(
-          child:_widgetList[_currentIndex],
+        body: Stack(
+          children: [
+            const Background(),
+            Container(
+              child:_widgetList[_currentIndex],
+            ),
+          ],
         )
     );
   }
