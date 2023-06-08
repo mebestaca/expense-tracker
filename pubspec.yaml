@@ -54,10 +54,10 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/expense-tracker.png"
+  image_path: "assets/expense-tracker-icon.png"
 
 flutter_native_splash:
-  color: "#50c7c7"
+  background_image: "assets/expense-tracker-background.png"
   image: "assets/expense-tracker-splash.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -81,6 +81,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/expense-tracker-drawer.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
