@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracker/pages/expenses/year_list.dart';
+import 'package:expense_tracker/shared/white_style.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -80,8 +81,10 @@ class _HistoryListState extends State<HistoryList> {
                 );
               }
               else{
-                return const Center(
-                  child: Text("No data found"),
+                return Center(
+                  child: Text("No data found",
+                    style: whiteStyle,
+                  ),
                 );
               }
             }
