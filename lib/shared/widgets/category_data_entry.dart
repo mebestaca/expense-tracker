@@ -43,76 +43,78 @@ class _CategoryDataEntryState extends State<CategoryDataEntry> {
       });
     }
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Form(
-            key: formKey,
-            child: TextFormField(
-              controller: categoryController,
-              validator: (val) {
-                return val != null && val.isNotEmpty ? null : "please enter a category";
-              },
-              decoration: fieldStyle.copyWith(
-                hintText: "category",
-                labelText: "category"
-              ),
-              onChanged: (val) {
-                setState(() {
-                  categoryName = val;
-                });
-              },
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-                onPressed: () async {
-                    if (formKey.currentState!.validate()){
-
-                        Map<String, dynamic> data = {
-                            CategoryModel.fieldCATEGORY : categoryName
-                        };
-
-                        final snackBar = SnackBar(
-                          content: Text("$categoryName added"),
-                          action: SnackBarAction(
-                            label: "Ok",
-                            onPressed: () {
-
-                            },
-                          ),
-                        );
-
-                        if (widget.entryMode == CategoryEntryMode.add) {
-                           await DatabaseService(path: widget.path).addEntry(data);
-
-                           setState(() {
-                             FocusManager.instance.primaryFocus?.unfocus();
-                             ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                             categoryController.clear();
-                             categoryName = "";
-                           });
-                        }
-
-                        if (widget.entryMode == CategoryEntryMode.edit) {
-                          await DatabaseService(path: widget.path).updateEntry(data, widget.id).then((value) {
-                            FocusManager.instance.primaryFocus?.unfocus();
-                            Navigator.pop(context);
-                          });
-                        }
-                    }
+    return Card(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Form(
+              key: formKey,
+              child: TextFormField(
+                controller: categoryController,
+                validator: (val) {
+                  return val != null && val.isNotEmpty ? null : "please enter a category";
                 },
-                child: const Text("Confirm")
+                decoration: fieldStyle.copyWith(
+                  hintText: "category",
+                  labelText: "category"
+                ),
+                onChanged: (val) {
+                  setState(() {
+                    categoryName = val;
+                  });
+                },
+              ),
             ),
           ),
-        )
-      ],
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                  onPressed: () async {
+                      if (formKey.currentState!.validate()){
+
+                          Map<String, dynamic> data = {
+                              CategoryModel.fieldCATEGORY : categoryName
+                          };
+
+                          final snackBar = SnackBar(
+                            content: Text("$categoryName added"),
+                            action: SnackBarAction(
+                              label: "Ok",
+                              onPressed: () {
+
+                              },
+                            ),
+                          );
+
+                          if (widget.entryMode == CategoryEntryMode.add) {
+                             await DatabaseService(path: widget.path).addEntry(data);
+
+                             setState(() {
+                               FocusManager.instance.primaryFocus?.unfocus();
+                               ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                               categoryController.clear();
+                               categoryName = "";
+                             });
+                          }
+
+                          if (widget.entryMode == CategoryEntryMode.edit) {
+                            await DatabaseService(path: widget.path).updateEntry(data, widget.id).then((value) {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              Navigator.pop(context);
+                            });
+                          }
+                      }
+                  },
+                  child: const Text("Confirm")
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
